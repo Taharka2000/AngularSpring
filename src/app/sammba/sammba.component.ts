@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Produit } from '../Models/produit.model';
 import { ProduitService } from '../services/produit.service';
 import { Categorie } from '../Models/categorie.model';
+import { AuthService } from '../services/auth/auth.service';
 
 
 @Component({
@@ -12,7 +13,7 @@ import { Categorie } from '../Models/categorie.model';
 export class SammbaComponent implements OnInit {
   produits?: Produit[];
   categories! : Categorie[];
-  constructor(private produitService: ProduitService) { }
+  constructor(private produitService: ProduitService,public authService:AuthService) { }
 
   ngOnInit(): void {
     this.chargerProduits();

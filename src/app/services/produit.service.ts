@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { apiURL, apiURLCat } from '../config';
 import { CategorieWrapper } from '../Models/categorieWrapped.model';
+import { AuthService } from '../services/auth/auth.service';
 
 
 const httpOptions = {
@@ -14,16 +15,19 @@ const httpOptions = {
   providedIn: 'root'
 })
 export class ProduitService {
-  apiURLCat: string = 'http://localhost:8080/produits/cat';
+  apiURLCat: string = 'http://localhost:8080/cat';
 
   // categories: Categorie[];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private authService: AuthService,) { }
   listeProduit(): Observable<Produit[]> {
-    return this.http.get<Produit[]>(apiURL);
+    // let jwt = this.authService.getToken();
+    // jwt = "Bearer " + jwt;
+    // let httpHeaders = new HttpHeaders({ "Authorization": jwt })
+    return this.http.get<Produit[]>(`${apiURL}/all`);
   }
   listeCategories(): Observable<CategorieWrapper> {
-    return this.http.get<CategorieWrapper>(this.apiURLCat);
+    return this.http.get<CategorieWrapper>(`${this.apiURLCat}/all`);
   }
   ajouterProduit(prod: Produit): Observable<Produit> {
     return this.http.post<Produit>(apiURL, prod, httpOptions);
